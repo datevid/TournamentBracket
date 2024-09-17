@@ -51,7 +51,7 @@ const generateConnections = (matches: MatchData[]): ConnectionProps[] => {
     const connections: ConnectionProps[] = [];
     const roundMatches: MatchData[][] = [];
 
-    // Group matches by round
+    // Agrupar partidos por ronda
     matches.forEach(match => {
         if (!roundMatches[match.round]) {
             roundMatches[match.round] = [];
@@ -59,7 +59,7 @@ const generateConnections = (matches: MatchData[]): ConnectionProps[] => {
         roundMatches[match.round].push(match);
     });
 
-    // Generate connections between rounds
+    // Generar conexiones entre rondas
     for (let round = 0; round < roundMatches.length - 1; round++) {
         const currentRound = roundMatches[round];
         const nextRound = roundMatches[round + 1];
@@ -71,16 +71,16 @@ const generateConnections = (matches: MatchData[]): ConnectionProps[] => {
 
             if (match1 && match2 && nextMatch) {
                 connections.push({
-                    startX: match1.x + 192, // Adjust based on match width
-                    startY: match1.y + 32, // Center of first match
+                    startX: match1.x + 192, // Ajustar basado en el ancho del partido
+                    startY: match1.y + 32, // Centro del primer partido
                     endX: nextMatch.x,
-                    endY: nextMatch.y + 32, // Center of next match
+                    endY: nextMatch.y + 32, // Centro del siguiente partido
                 });
                 connections.push({
-                    startX: match2.x + 192, // Adjust based on match width
-                    startY: match2.y + 32, // Center of second match
+                    startX: match2.x + 192, // Ajustar basado en el ancho del partido
+                    startY: match2.y + 32, // Centro del segundo partido
                     endX: nextMatch.x,
-                    endY: nextMatch.y + 32, // Center of next match
+                    endY: nextMatch.y + 32, // Centro del siguiente partido
                 });
             }
         }
@@ -91,35 +91,44 @@ const generateConnections = (matches: MatchData[]): ConnectionProps[] => {
 
 const TournamentBracket: React.FC = () => {
     const matches: MatchData[] = [
-        // Round 2 (Cuartos de final)
-        { round: 0, match: 0, team1: "FaZe Clan", score1: 1, team2: "Sangal Esports", score2: 2, x: 10, y: 40 },
-        { round: 0, match: 1, team1: "FlyQuest", score1: 0, team2: "Eternal Fire", score2: 2, x: 10, y: 110 },
-        { round: 0, match: 2, team1: "HEROIC", score1: 1, team2: "Ninjas in Pyjamas", score2: 2, x: 10, y: 180 },
-        { round: 0, match: 3, team1: "Lynn Vision Gaming", score1: 0, team2: "Natus Vincere", score2: 2, x: 10, y: 250 },
+        // Ronda 1 (Octavos de final)
+        { round: 0, match: 0, team1: "Team 1", score1: 1, team2: "Team 2", score2: 2, x: 10, y: 20 },
+        { round: 0, match: 1, team1: "Team 3", score1: 0, team2: "Team 4", score2: 2, x: 10, y: 90 },
+        { round: 0, match: 2, team1: "Team 5", score1: 1, team2: "Team 6", score2: 2, x: 10, y: 160 },
+        { round: 0, match: 3, team1: "Team 7", score1: 0, team2: "Team 8", score2: 2, x: 10, y: 230 },
+        { round: 0, match: 4, team1: "Team 9", score1: 1, team2: "Team 10", score2: 2, x: 10, y: 300 },
+        { round: 0, match: 5, team1: "Team 11", score1: 0, team2: "Team 12", score2: 2, x: 10, y: 370 },
+        { round: 0, match: 6, team1: "Team 13", score1: 1, team2: "Team 14", score2: 2, x: 10, y: 440 },
+        { round: 0, match: 7, team1: "Team 15", score1: 0, team2: "Team 16", score2: 2, x: 10, y: 510 },
 
-        // Round 3 (Semifinales)
-        { round: 1, match: 0, team1: "Sangal Esports", score1: 0, team2: "Eternal Fire", score2: 2, x: 270, y: 75 },
-        { round: 1, match: 1, team1: "Ninjas in Pyjamas", score1: 0, team2: "Natus Vincere", score2: 2, x: 270, y: 215 },
+        // Ronda 2 (Cuartos de final)
+        { round: 1, match: 0, team1: "Team 2", score1: 1, team2: "Team 4", score2: 2, x: 270, y: 55 },
+        { round: 1, match: 1, team1: "Team 6", score1: 0, team2: "Team 8", score2: 2, x: 270, y: 185 },
+        { round: 1, match: 2, team1: "Team 10", score1: 1, team2: "Team 12", score2: 2, x: 270, y: 315 },
+        { round: 1, match: 3, team1: "Team 14", score1: 0, team2: "Team 16", score2: 2, x: 270, y: 445 },
 
-        // Round 4 (Final)
-        { round: 2, match: 0, team1: "Eternal Fire", score1: 0, team2: "Natus Vincere", score2: 2, x: 530, y: 145 },
+        // Ronda 3 (Semifinales)
+        { round: 2, match: 0, team1: "Team 4", score1: 1, team2: "Team 8", score2: 2, x: 530, y: 120 },
+        { round: 2, match: 1, team1: "Team 12", score1: 0, team2: "Team 16", score2: 2, x: 530, y: 350 },
+
+        // Ronda 4 (Final)
+        { round: 3, match: 0, team1: "Team 8", score1: 0, team2: "Team 16", score2: 2, x: 790, y: 235 },
     ];
 
     const connections = useMemo(() => generateConnections(matches), [matches]);
 
     return (
-        <div className="relative w-[800px] h-[320px] bg-gray-900 p-4">
-            <h2 className="text-xl text-white mb-4 absolute top-2 left-4">Group A</h2>
+        <div className="relative w-[1000px] h-[600px] bg-gray-900 p-4">
+            <h2 className="text-xl text-white mb-4 absolute top-2 left-4">Torneo de 16 Equipos</h2>
             {matches.map((match, index) => (
                 <Match key={index} {...match} />
             ))}
             {connections.map((connection, index) => (
                 <Connection key={index} {...connection} />
             ))}
-            <div className="absolute" style={{left: 790, top: 95}}>
-                <div className="text-white mb-2">Qualified</div>
-                <div className="w-48 bg-gray-800 text-white p-2 mb-2">Natus Vincere</div>
-                <div className="w-48 bg-gray-800 text-white p-2">Eternal Fire</div>
+            <div className="absolute" style={{left: 980, top: 195}}>
+                <div className="text-white mb-2">Ganador</div>
+                <div className="w-48 bg-gray-800 text-white p-2">Team 16</div>
             </div>
         </div>
     );
