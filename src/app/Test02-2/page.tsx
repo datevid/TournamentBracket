@@ -26,24 +26,31 @@ interface RoundProps {
     isLastRound?: boolean;
 }
 
-const Round: React.FC<RoundProps> = ({ title, matches, isLastRound = false }) => (
-    <div className="flex flex-col mr-11">
+const Round: React.FC<RoundProps> = ({ title, matches }) => (
+    <div className="flex flex-col mr-11 relative">
         <h3 className="text-sm font-bold mb-2">{title}</h3>
         <div className="flex flex-col justify-around h-full">
             {matches.map((match, index) => (
                 <div key={index} className="relative">
                     <Match {...match} />
-                    {!isLastRound && (
+
+                    {index % 2 === 0 && index < matches.length - 1 && (
                         <>
-                            <div className="absolute top-7 left-48 w-8 h-1 bg-gray-600" />
-                            {index % 2 === 0 && (
-                                <div className="absolute top-7 left-[224px] w-1 h-16 bg-gray-600" />
-                            )}
+                            <div className="absolute top-7 left-48 w-11 h-1 bg-red-600"/>
+                            <div className="absolute top-7 left-[212px] w-1 h-7 bg-red-300"/>
+                        </>
+
+                    )}
+                    {index % 2 === 1 && index < matches.length && (
+                        <>
+                            <div className="absolute top-7 left-48 w-11 h-1 bg-blue-600"/>
+                            <div className="absolute top-0 left-[212px] w-1 h-7 bg-blue-300"/>
                         </>
                     )}
                 </div>
             ))}
         </div>
+
     </div>
 );
 
@@ -83,7 +90,7 @@ const TournamentBracket: React.FC = () => {
             <h2 className="text-xl font-bold mb-4">Group A</h2>
             <div className="flex">
                 {rounds.map((round, index) => (
-                    <Round key={index} {...round} isLastRound={index === rounds.length - 1} />
+                    <Round key={index} {...round} />
                 ))}
                 <div className="flex flex-col">
                     <h3 className="text-sm font-bold mb-2">Qualified</h3>
