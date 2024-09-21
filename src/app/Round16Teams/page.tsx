@@ -34,10 +34,12 @@ const Round: React.FC<RoundProps> = ({ title, matches, isLastRound = false }) =>
         const startY = matchHeight / 2;
         let endY;
 
-        if (totalMatches === 4) {
+        if (totalMatches === 8) {
             endY = index % 2 === 0 ? startY + matchHeight / 2 + matchSpacing / 2 : startY - matchHeight / 2 - matchSpacing / 2;
+        } else if (totalMatches === 4) {
+            endY = index % 2 === 0 ? startY + matchHeight / 1 + matchSpacing / 2 : startY - matchHeight / 1 - matchSpacing / 2;
         } else if (totalMatches === 2) {
-            endY = index === 0 ? startY + matchHeight + matchSpacing : startY - matchHeight - matchSpacing;
+            endY = index % 2 === 0 ? startY + matchHeight / (1/2) + matchSpacing / 1 : startY - matchHeight / (1/2) - matchSpacing / 2;
         } else {
             endY = startY;
         }
@@ -77,6 +79,19 @@ interface RoundData {
 const TournamentBracket: React.FC = () => {
     const rounds: RoundData[] = [
         {
+            title: "Round of 16",
+            matches: [
+                { team1: "Team 1", team2: "Team 2", score1: 0, score2: 0 },
+                { team1: "Team 3", team2: "Team 4", score1: 0, score2: 0 },
+                { team1: "Team 5", team2: "Team 6", score1: 0, score2: 0 },
+                { team1: "Team 7", team2: "Team 8", score1: 0, score2: 0 },
+                { team1: "Team 9", team2: "Team 10", score1: 0, score2: 0 },
+                { team1: "Team 11", team2: "Team 12", score1: 0, score2: 0 },
+                { team1: "Team 13", team2: "Team 14", score1: 0, score2: 0 },
+                { team1: "Team 15", team2: "Team 16", score1: 0, score2: 0 },
+            ]
+        },
+        {
             title: "Upper Bracket Quarterfinals",
             matches: [
                 { team1: "FaZe Clan", team2: "Sangal Esports", score1: 1, score2: 2 },
@@ -101,25 +116,23 @@ const TournamentBracket: React.FC = () => {
     ];
 
     return (
-        <>
-            <div className="bg-gray-900 text-white p-4">
-                <h2 className="text-xl font-bold mb-4">Group A</h2>
-                <div className="flex">
-                    {rounds.map((round, index) => (
-                        <Round key={index} {...round} isLastRound={index === rounds.length - 1}/>
-                    ))}
-                    <div className="flex flex-col">
-                        <h3 className="text-sm font-bold mb-2">Qualified</h3>
-                        <div className="w-48 h-14 border border-gray-600 flex items-center px-2">
-                            <span className="text-sm">Natus Vincere</span>
-                        </div>
-                        <div className="w-48 h-14 border border-gray-600 mt-1 flex items-center px-2">
-                            <span className="text-sm">Eternal Fire</span>
-                        </div>
+        <div className="bg-gray-900 text-white p-4">
+            <h2 className="text-xl font-bold mb-4">Tournament Bracket</h2>
+            <div className="flex">
+                {rounds.map((round, index) => (
+                    <Round key={index} {...round} isLastRound={index === rounds.length - 1}/>
+                ))}
+                <div className="flex flex-col">
+                    <h3 className="text-sm font-bold mb-2">Qualified</h3>
+                    <div className="w-48 h-14 border border-gray-600 flex items-center px-2">
+                        <span className="text-sm">Natus Vincere</span>
+                    </div>
+                    <div className="w-48 h-14 border border-gray-600 mt-1 flex items-center px-2">
+                        <span className="text-sm">Eternal Fire</span>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
