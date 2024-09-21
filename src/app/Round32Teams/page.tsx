@@ -46,7 +46,7 @@ const Round: React.FC<RoundProps> = ({ title, matches, isLastRound = false }) =>
             endY = startY;
         }
 
-        return `M 0 ${startY} H 24 V ${endY} H 48`;
+        return `M 0 ${startY} H 24 V ${endY} H 44`;
     };
 
     return (
@@ -61,8 +61,8 @@ const Round: React.FC<RoundProps> = ({ title, matches, isLastRound = false }) =>
                                 <path
                                     d={getConnectionPath(index, matches.length)}
                                     fill="none"
-                                    stroke="#FF0000"
-                                    strokeWidth="4"
+                                    stroke="#555"
+                                    strokeWidth="2"
                                 />
                             </svg>
                         )}
